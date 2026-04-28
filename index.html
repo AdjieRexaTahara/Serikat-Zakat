@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serikat Zakat - Simulation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -34,13 +36,12 @@
             pointer-events: none;
         }
 
-        /* Menu Screens */
         .menu-screen {
             position: absolute;
             inset: 0;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; 
+            justify-content: flex-end;
             align-items: center;
             padding-bottom: 10vh;
             background-image: url('https://lh3.googleusercontent.com/d/1M3n6SSDL3PhT84sufNe4xUC51hvARODM');
@@ -58,7 +59,7 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 1.5rem;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.8), 2px 2px 0 rgba(0,0,0,1);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8), 2px 2px 0 rgba(0, 0, 0, 1);
         }
 
         .btn-base {
@@ -71,14 +72,18 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 3px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
 
-        .btn-base:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-play { background: linear-gradient(45deg, #10b981, #059669); }
+        .btn-base:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-play {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
 
-        /* Virtual Keyboard */
         .keyboard {
             display: grid;
             grid-template-columns: repeat(10, 1fr);
@@ -102,8 +107,13 @@
             user-select: none;
         }
 
-        .key:active { background: #10b981; }
-        .key-wide { grid-column: span 2; background: rgba(239, 68, 68, 0.4); }
+        .key:active {
+            background: #10b981;
+        }
+        .key-wide {
+            grid-column: span 2;
+            background: rgba(239, 68, 68, 0.4);
+        }
 
         #name-input-display {
             background: rgba(255, 255, 255, 0.9);
@@ -118,7 +128,6 @@
             border: 4px solid #10b981;
         }
 
-        /* UI Dialog Kotak Bawah */
         #bottom-bar {
             position: absolute;
             bottom: 0;
@@ -131,7 +140,7 @@
             display: none;
             padding: 25px 50px;
             color: white;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
         }
 
         #npc-name-label {
@@ -180,7 +189,6 @@
             transform: translateY(-2px);
         }
 
-        /* NPC UI Portrait */
         #npc-portrait {
             position: absolute;
             bottom: 200px;
@@ -188,12 +196,11 @@
             height: 70vh;
             z-index: 120;
             display: none;
-            filter: drop-shadow(-20px 0 30px rgba(0,0,0,0.7));
+            filter: drop-shadow(-20px 0 30px rgba(0, 0, 0, 0.7));
             transition: opacity 0.4s ease-out, transform 0.4s ease-out;
             pointer-events: none;
         }
 
-        /* Senior UI */
         #senior-portrait {
             position: absolute;
             bottom: 190px;
@@ -201,13 +208,12 @@
             height: 65vh;
             z-index: 121;
             display: none;
-            filter: drop-shadow(20px 0 30px rgba(0,0,0,0.7));
+            filter: drop-shadow(20px 0 30px rgba(0, 0, 0, 0.7));
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
             pointer-events: none;
             transform: translateX(-100px);
         }
 
-        /* Top Bar UI Game - Semua di kiri atas berderet */
         #ui-top {
             position: absolute;
             top: 20px;
@@ -225,11 +231,11 @@
         }
 
         .ui-panel {
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             padding: 10px 20px;
             border-radius: 12px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             pointer-events: auto;
         }
@@ -241,11 +247,20 @@
             border-radius: 6px;
             overflow: hidden;
             margin-top: 5px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        #satisfaction-bar { width: 100%; height: 100%; background: #10b981; transition: width 0.3s; }
-        #timer-bar { width: 100%; height: 100%; background: #f59e0b; }
+        #satisfaction-bar {
+            width: 100%;
+            height: 100%;
+            background: #10b981;
+            transition: width 0.3s;
+        }
+        #timer-bar {
+            width: 100%;
+            height: 100%;
+            background: #f59e0b;
+        }
 
         #feedback-overlay {
             position: fixed;
@@ -259,10 +274,9 @@
             display: none;
             pointer-events: none;
             text-align: center;
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
-        /* Panel untuk piala dan info title */
         #trophy-panel {
             position: absolute;
             left: 20px;
@@ -273,14 +287,16 @@
             filter: drop-shadow(0 0 10px gold);
             transition: transform 0.2s;
         }
-        #trophy-panel:hover { transform: translateY(-50%) scale(1.1); }
+        #trophy-panel:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
 
         #title-info-modal {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             border: 2px solid #fbbf24;
             border-radius: 20px;
             padding: 30px;
@@ -315,7 +331,6 @@
             pointer-events: none;
         }
 
-        /* Settings panel tetap di kanan atas */
         #settings-panel {
             position: absolute;
             top: 20px;
@@ -326,8 +341,8 @@
         }
 
         .icon-btn {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             width: 50px;
             height: 50px;
@@ -349,443 +364,909 @@
         #back-to-menu-btn {
             background: rgba(239, 68, 68, 0.8);
         }
-        #back-to-menu-btn:hover { background: #ef4444; }
+        #back-to-menu-btn:hover {
+            background: #ef4444;
+        }
+
+        /* ========== MODAL OVERLAY UMUM ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        /* ========== MODAL KEMENANGAN (MERIAH) ========== */
+        #win-modal-content {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border: 4px solid #fbbf24;
+            border-radius: 24px;
+            padding: 35px 30px;
+            color: white;
+            text-align: center;
+            min-width: 420px;
+            max-width: 500px;
+            box-shadow: 0 0 60px rgba(251, 191, 36, 0.5), 0 0 120px rgba(251, 191, 36, 0.2);
+            animation: winBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: visible;
+        }
+
+        @keyframes winBounce {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes sparkle {
+            0%,
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(-15px) scale(1.3);
+            }
+        }
+
+        #win-modal-content .confetti-emoji {
+            font-size: 3rem;
+            animation: sparkle 0.8s ease-in-out infinite;
+            display: inline-block;
+            pointer-events: none;
+        }
+        #win-modal-content .confetti-emoji:nth-child(1) {
+            animation-delay: 0s;
+        }
+        #win-modal-content .confetti-emoji:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        #win-modal-content .confetti-emoji:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        #win-modal-content .confetti-emoji:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        #win-title-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #fbbf24;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.7);
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+
+        #win-score-text {
+            font-size: 1.3rem;
+            color: #d1d5db;
+            margin-bottom: 8px;
+        }
+
+        .win-btn {
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            margin: 6px;
+            min-width: 180px;
+        }
+        .win-btn-menu {
+            background: #ef4444;
+            color: white;
+        }
+        .win-btn-menu:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+        }
+        .win-btn-continue {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+        }
+        .win-btn-continue:hover {
+            background: linear-gradient(45deg, #059669, #047857);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        /* ========== MODAL GAME OVER ========== */
+        #gameover-modal-content {
+            background: linear-gradient(145deg, #1f1a1a, #3b1a1a);
+            border: 4px solid #ef4444;
+            border-radius: 24px;
+            padding: 35px 30px;
+            color: white;
+            text-align: center;
+            min-width: 400px;
+            max-width: 480px;
+            box-shadow: 0 0 50px rgba(239, 68, 68, 0.5), 0 0 100px rgba(239, 68, 68, 0.2);
+            animation: winBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #gameover-modal-content h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ef4444;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        #gameover-modal-content p {
+            font-size: 1.2rem;
+            color: #fca5a5;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .gameover-btn {
+            padding: 0.9rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            background: #ef4444;
+            color: white;
+        }
+        .gameover-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+        }
     </style>
 </head>
 <body>
 
-<div id="game-container">
-    <div id="feedback-overlay"></div>
+    <div id="game-container">
+        <div id="feedback-overlay"></div>
 
-    <!-- PENGATURAN GLOBAL -->
-    <div id="settings-panel">
-        <button class="icon-btn" onclick="toggleFullScreen()" title="Layar Penuh">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-        </button>
-    </div>
-
-    <!-- TROPHY PANEL (Kiri Tengah) -->
-    <div id="trophy-panel" onclick="showTitleInfo()">
-        <span style="font-size: 60px; line-height: 1;">🏆</span>
-    </div>
-
-    <!-- MODAL INFO TITLE -->
-    <div id="title-info-modal">
-        <h2 class="text-3xl font-bold mb-4 text-yellow-400">🏆 Title Amil 🏆</h2>
-        <div class="space-y-2 text-lg w-full">
-            <div class="flex justify-between"><span>Mode Mudah (100 poin):</span><span class="text-emerald-400 font-bold">Amil Junior</span></div>
-            <div class="flex justify-between"><span>Mode Sedang (100 poin):</span><span class="text-amber-400 font-bold">Amil</span></div>
-            <div class="flex justify-between"><span>Mode Sulit (100 poin):</span><span class="text-rose-400 font-bold">Amil Senior</span></div>
+        <!-- PENGATURAN GLOBAL -->
+        <div id="settings-panel">
+            <button class="icon-btn" onclick="toggleFullScreen()" title="Layar Penuh">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </button>
         </div>
-        <button class="btn-base bg-gray-700 mt-6 px-6 py-2" onclick="hideTitleInfo()">Tutup</button>
-    </div>
 
-    <!-- UI ATAS (Selama Permainan) - Semua di kiri atas berderet -->
-    <div id="ui-top">
-        <div class="ui-top-row">
-            <button id="back-to-menu-btn" class="icon-btn" onclick="backToMainMenu()" title="Kembali ke Menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M3 12h18M3 12l6-6m-6 6l6 6"/></svg>
-            </button>
-            <div class="ui-panel">
-                <div class="text-[10px] font-bold uppercase text-emerald-400">Amil Aktif</div>
-                <div class="text-lg font-black leading-tight" id="amil-name-display">Menunggu...</div>
-                <div class="mt-2">
-                    <div class="text-[9px] uppercase opacity-70">Kepuasan Publik</div>
-                    <div class="bar-container">
-                        <div id="satisfaction-bar"></div>
-                    </div>
-                </div>
+        <!-- TROPHY PANEL (Kiri Tengah) -->
+        <div id="trophy-panel" onclick="showTitleInfo()">
+            <span style="font-size: 60px; line-height: 1;">🏆</span>
+        </div>
+
+        <!-- MODAL INFO TITLE -->
+        <div id="title-info-modal">
+            <h2 class="text-3xl font-bold mb-4 text-yellow-400">🏆 Title Amil 🏆</h2>
+            <div class="space-y-2 text-lg w-full">
+                <div class="flex justify-between"><span>Mode Mudah (100 poin):</span><span class="text-emerald-400 font-bold">Amil Junior</span></div>
+                <div class="flex justify-between"><span>Mode Sedang (100 poin):</span><span class="text-amber-400 font-bold">Amil</span></div>
+                <div class="flex justify-between"><span>Mode Sulit (100 poin):</span><span class="text-rose-400 font-bold">Amil Senior</span></div>
             </div>
-            <button id="senior-help-btn" class="ui-panel hover:bg-emerald-900/40 transition-colors" onclick="useSeniorHelp()">
-                <div id="senior-cooldown-overlay"></div>
-                <div class="text-[10px] font-bold uppercase text-blue-400">Bantuan Senior</div>
-                <div class="text-xs font-bold" id="senior-status">TERSEDIA</div>
-                <div id="senior-timer" class="text-[10px] opacity-60 hidden">120s</div>
-            </button>
-            <div class="ui-panel flex items-center gap-4">
+            <button class="btn-base bg-gray-700 mt-6 px-6 py-2" onclick="hideTitleInfo()">Tutup</button>
+        </div>
+
+        <!-- ========== MODAL KEMENANGAN (SCORE 100) ========== -->
+        <div id="win-modal-overlay" class="modal-overlay">
+            <div id="win-modal-content">
                 <div>
-                    <div class="text-[10px] font-bold uppercase text-amber-400">Skor</div>
-                    <div class="text-xl font-black leading-tight" id="game-score">0</div>
+                    <span class="confetti-emoji">🎉</span>
+                    <span class="confetti-emoji">🏆</span>
+                    <span class="confetti-emoji">✨</span>
+                    <span class="confetti-emoji">🎊</span>
                 </div>
-                <div>
-                    <div class="text-[9px] uppercase opacity-70">Durasi</div>
-                    <div class="bar-container" style="width:140px">
-                        <div id="timer-bar"></div>
-                    </div>
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: #fde68a; margin-bottom: 4px;">SELAMAT!</h2>
+                <p style="font-size: 1rem; color: #d1d5db;">Anda meraih <strong>100 poin</strong> dan mendapatkan gelar:</p>
+                <div id="win-title-text">Amil Junior</div>
+                <p id="win-score-text" style="margin-top: 6px;">Skor: <strong>100</strong> | Mode: <span id="win-mode-label">Mudah</span></p>
+                <div style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                    <button class="win-btn win-btn-continue" onclick="continuePlaying()">▶️ Lanjutkan Bermain</button>
+                    <button class="win-btn win-btn-menu" onclick="backToMainMenuFromWin()">🏠 Kembali ke Menu</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Screens -->
-    <div id="menu-overlay" class="menu-screen">
-        <h1 class="game-title">SERIKAT ZAKAT</h1>
-        <button class="btn-base btn-play mb-8" onclick="showDifficulty()">Mulai Berkhidmat</button>
-    </div>
-
-    <div id="difficulty-menu" class="menu-screen" style="display: none;">
-        <h1 class="game-title" style="font-size: 2.5rem;">Pilih Beban Tugas</h1>
-        <div class="flex gap-4 mb-8">
-            <button class="btn-base bg-emerald-500" onclick="setDifficulty('easy')">Mudah</button>
-            <button class="btn-base bg-amber-500" onclick="setDifficulty('medium')">Sedang</button>
-            <button class="btn-base bg-rose-500" onclick="setDifficulty('hard')">Sulit</button>
+        <!-- ========== MODAL GAME OVER (KEPUASAN 0) ========== -->
+        <div id="gameover-modal-overlay" class="modal-overlay">
+            <div id="gameover-modal-content">
+                <div style="font-size: 4rem; margin-bottom: 8px;">💔</div>
+                <h2>GAME OVER</h2>
+                <p>Indikator <strong>Kepuasan Publik</strong> telah mencapai <strong>nol</strong>.<br>Masyarakat sudah tidak percaya lagi dengan pelayanan Anda.</p>
+                <p style="font-size: 0.9rem; color: #f87171;">Jangan berkecil hati, coba lagi dan tingkatkan pelayanan zakat Anda!</p>
+                <button class="gameover-btn" onclick="backToMainMenuFromGameOver()">🏠 Kembali ke Menu Utama</button>
+            </div>
         </div>
-    </div>
 
-    <div id="name-menu" class="menu-screen" style="display: none; justify-content: center; padding-bottom: 5vh;">
-        <h2 class="text-white text-4xl mb-4 font-bold [text-shadow:_1px_1px_0_#000,_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000]">Siapa namamu, wahai Amil?</h2>
-        <div id="name-input-display">_</div>
-        <div class="keyboard" id="v-keyboard">
-            <div class="key" onclick="typeChar('Q')">Q</div><div class="key" onclick="typeChar('W')">W</div><div class="key" onclick="typeChar('E')">E</div><div class="key" onclick="typeChar('R')">R</div><div class="key" onclick="typeChar('T')">T</div><div class="key" onclick="typeChar('Y')">Y</div><div class="key" onclick="typeChar('U')">U</div><div class="key" onclick="typeChar('I')">I</div><div class="key" onclick="typeChar('O')">O</div><div class="key" onclick="typeChar('P')">P</div>
-            <div class="key" onclick="typeChar('A')">A</div><div class="key" onclick="typeChar('S')">S</div><div class="key" onclick="typeChar('D')">D</div><div class="key" onclick="typeChar('F')">F</div><div class="key" onclick="typeChar('G')">G</div><div class="key" onclick="typeChar('H')">H</div><div class="key" onclick="typeChar('J')">J</div><div class="key" onclick="typeChar('K')">K</div><div class="key" onclick="typeChar('L')">L</div><div class="key key-wide" onclick="backspace()">DEL</div>
-            <div class="key" onclick="typeChar('Z')">Z</div><div class="key" onclick="typeChar('X')">X</div><div class="key" onclick="typeChar('C')">C</div><div class="key" onclick="typeChar('V')">V</div><div class="key" onclick="typeChar('B')">B</div><div class="key" onclick="typeChar('N')">N</div><div class="key" onclick="typeChar('M')">M</div>
+        <!-- UI ATAS (Selama Permainan) -->
+        <div id="ui-top">
+            <div class="ui-top-row">
+                <button id="back-to-menu-btn" class="icon-btn" onclick="backToMainMenu()" title="Kembali ke Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M3 12h18M3 12l6-6m-6 6l6 6"/></svg>
+                </button>
+                <div class="ui-panel">
+                    <div class="text-[10px] font-bold uppercase text-emerald-400">Amil Aktif</div>
+                    <div class="text-lg font-black leading-tight" id="amil-name-display">Menunggu...</div>
+                    <div class="mt-2">
+                        <div class="text-[9px] uppercase opacity-70">Kepuasan Publik</div>
+                        <div class="bar-container">
+                            <div id="satisfaction-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <button id="senior-help-btn" class="ui-panel hover:bg-emerald-900/40 transition-colors" onclick="useSeniorHelp()">
+                    <div id="senior-cooldown-overlay"></div>
+                    <div class="text-[10px] font-bold uppercase text-blue-400">Bantuan Senior</div>
+                    <div class="text-xs font-bold" id="senior-status">TERSEDIA</div>
+                    <div id="senior-timer" class="text-[10px] opacity-60 hidden">120s</div>
+                </button>
+                <div class="ui-panel flex items-center gap-4">
+                    <div>
+                        <div class="text-[10px] font-bold uppercase text-amber-400">Skor</div>
+                        <div class="text-xl font-black leading-tight" id="game-score">0</div>
+                    </div>
+                    <div>
+                        <div class="text-[9px] uppercase opacity-70">Durasi</div>
+                        <div class="bar-container" style="width:140px">
+                            <div id="timer-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button id="register-btn" class="btn-base btn-play mt-6" onclick="finalizeRegistration()" disabled>Masuk ke Serikat</button>
+
+        <!-- Screens -->
+        <div id="menu-overlay" class="menu-screen">
+            <h1 class="game-title">SERIKAT ZAKAT</h1>
+            <button class="btn-base btn-play mb-8" onclick="showDifficulty()">Mulai Berkhidmat</button>
+        </div>
+
+        <div id="difficulty-menu" class="menu-screen" style="display: none;">
+            <h1 class="game-title" style="font-size: 2.5rem;">Pilih Beban Tugas</h1>
+            <div class="flex gap-4 mb-8">
+                <button class="btn-base bg-emerald-500" onclick="setDifficulty('easy')">Mudah</button>
+                <button class="btn-base bg-amber-500" onclick="setDifficulty('medium')">Sedang</button>
+                <button class="btn-base bg-rose-500" onclick="setDifficulty('hard')">Sulit</button>
+            </div>
+        </div>
+
+        <div id="name-menu" class="menu-screen" style="display: none; justify-content: center; padding-bottom: 5vh;">
+            <h2 class="text-white text-4xl mb-4 font-bold [text-shadow:_1px_1px_0_#000,_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000]">Siapa namamu, wahai Amil?</h2>
+            <div id="name-input-display">_</div>
+            <div class="keyboard" id="v-keyboard">
+                <div class="key" onclick="typeChar('Q')">Q</div>
+                <div class="key" onclick="typeChar('W')">W</div>
+                <div class="key" onclick="typeChar('E')">E</div>
+                <div class="key" onclick="typeChar('R')">R</div>
+                <div class="key" onclick="typeChar('T')">T</div>
+                <div class="key" onclick="typeChar('Y')">Y</div>
+                <div class="key" onclick="typeChar('U')">U</div>
+                <div class="key" onclick="typeChar('I')">I</div>
+                <div class="key" onclick="typeChar('O')">O</div>
+                <div class="key" onclick="typeChar('P')">P</div>
+                <div class="key" onclick="typeChar('A')">A</div>
+                <div class="key" onclick="typeChar('S')">S</div>
+                <div class="key" onclick="typeChar('D')">D</div>
+                <div class="key" onclick="typeChar('F')">F</div>
+                <div class="key" onclick="typeChar('G')">G</div>
+                <div class="key" onclick="typeChar('H')">H</div>
+                <div class="key" onclick="typeChar('J')">J</div>
+                <div class="key" onclick="typeChar('K')">K</div>
+                <div class="key" onclick="typeChar('L')">L</div>
+                <div class="key key-wide" onclick="backspace()">DEL</div>
+                <div class="key" onclick="typeChar('Z')">Z</div>
+                <div class="key" onclick="typeChar('X')">X</div>
+                <div class="key" onclick="typeChar('C')">C</div>
+                <div class="key" onclick="typeChar('V')">V</div>
+                <div class="key" onclick="typeChar('B')">B</div>
+                <div class="key" onclick="typeChar('N')">N</div>
+                <div class="key" onclick="typeChar('M')">M</div>
+            </div>
+            <button id="register-btn" class="btn-base btn-play mt-6" onclick="finalizeRegistration()" disabled>Masuk ke Serikat</button>
+        </div>
+
+        <!-- Portraits -->
+        <img id="npc-portrait" src="" alt="NPC Portrait">
+        <img id="senior-portrait" src="https://lh3.googleusercontent.com/d/1zyRNSPN_k1xdO9oAe-RwgQCy8B3NGqRK" alt="Senior Portrait">
+
+        <!-- Dialog Box -->
+        <div id="bottom-bar">
+            <div id="npc-name-label">Nama Orang</div>
+            <div id="dialog-text">Memuat percakapan...</div>
+            <div id="options-container"></div>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
     </div>
 
-    <!-- Portraits -->
-    <img id="npc-portrait" src="" alt="NPC Portrait">
-    <img id="senior-portrait" src="https://lh3.googleusercontent.com/d/1zyRNSPN_k1xdO9oAe-RwgQCy8B3NGqRK" alt="Senior Portrait">
+    <script>
+        // === SOUND EFFECT (Web Audio) ===
+        let audioCtx = null;
 
-    <!-- Dialog Box -->
-    <div id="bottom-bar">
-        <div id="npc-name-label">Nama Orang</div>
-        <div id="dialog-text">Memuat percakapan...</div>
-        <div id="options-container"></div>
-    </div>
+        function initAudio() {
+            if (audioCtx) return;
+            try {
+                audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+            } catch (e) { console.warn("Web Audio tidak didukung"); }
+        }
 
-    <canvas id="gameCanvas"></canvas>
-</div>
+        function playSound(type) {
+            if (!audioCtx) initAudio();
+            if (!audioCtx) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            let freq = 800;
+            if (type === 'correct') freq = 1200;
+            else if (type === 'wrong') freq = 400;
+            else if (type === 'timeout') freq = 300;
+            else if (type === 'click') freq = 1000;
+            else if (type === 'senior') freq = 900;
+            else if (type === 'win') freq = 1500;
+            else if (type === 'gameover') freq = 200;
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.2);
+        }
 
-<script>
-    // === SOUND EFFECT (Web Audio) ===
-    let audioCtx = null;
-    function initAudio() {
-        if (audioCtx) return;
-        try {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        } catch(e) { console.warn("Web Audio tidak didukung"); }
-    }
-    function playSound(type) {
-        if (!audioCtx) initAudio();
-        if (!audioCtx) return;
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        let freq = 800;
-        if (type === 'correct') freq = 1200;
-        else if (type === 'wrong') freq = 400;
-        else if (type === 'timeout') freq = 300;
-        else if (type === 'click') freq = 1000;
-        else if (type === 'senior') freq = 900;
-        else if (type === 'win') freq = 1500;
-        osc.frequency.value = freq;
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.2);
-    }
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const bottomBar = document.getElementById('bottom-bar');
+        const npcPortrait = document.getElementById('npc-portrait');
+        const seniorPortrait = document.getElementById('senior-portrait');
+        const npcNameUI = document.getElementById('npc-name-label');
+        const dialogTextUI = document.getElementById('dialog-text');
+        const optionsContainer = document.getElementById('options-container');
+        const scoreUI = document.getElementById('game-score');
+        const feedbackOverlay = document.getElementById('feedback-overlay');
+        const satBar = document.getElementById('satisfaction-bar');
+        const timerBar = document.getElementById('timer-bar');
 
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const bottomBar = document.getElementById('bottom-bar');
-    const npcPortrait = document.getElementById('npc-portrait');
-    const seniorPortrait = document.getElementById('senior-portrait');
-    const npcNameUI = document.getElementById('npc-name-label');
-    const dialogTextUI = document.getElementById('dialog-text');
-    const optionsContainer = document.getElementById('options-container');
-    const scoreUI = document.getElementById('game-score');
-    const feedbackOverlay = document.getElementById('feedback-overlay');
-    const satBar = document.getElementById('satisfaction-bar');
-    const timerBar = document.getElementById('timer-bar');
+        let seniorAvailable = true,
+            seniorActive = false,
+            seniorCooldownTime = 120,
+            currentCooldown = 0;
+        let gameActive = false,
+            playerName = "",
+            score = 0,
+            satisfaction = 100;
+        let difficulty = 'easy',
+            timeLimit = 30,
+            timeLeft = 0;
+        let currentNPC = null,
+            isWaitingForNext = false,
+            timerInterval = null;
+        let lastNPCType = null;
 
-    let seniorAvailable = true, seniorActive = false, seniorCooldownTime = 120, currentCooldown = 0;
-    let gameActive = false, playerName = "", score = 0, satisfaction = 100;
-    let difficulty = 'easy', timeLimit = 30, timeLeft = 0;
-    let currentNPC = null, isWaitingForNext = false, timerInterval = null;
-    let lastNPCType = null;
+        const randomNames = ["Bambang", "Suryo", "Fauzan", "Rian", "Adit", "Prasetyo", "Hendra", "Budi", "Zul", "Umar"];
 
-    const randomNames = ["Bambang", "Suryo", "Fauzan", "Rian", "Adit", "Prasetyo", "Hendra", "Budi", "Zul", "Umar"];
-
-    // === PERTANYAAN DIPERPANJANG DAN LEBIH INFORMATIF ===
-    const npcPrototypes = [
-        { 
-            type: 'Kaya', 
+        // === PERTANYAAN DENGAN KUNCI JAWABAN YANG TELAH DIVERIFIKASI ===
+        const npcPrototypes = [{
+            type: 'Kaya',
             small: 'https://lh3.googleusercontent.com/d/1bthLLUYHvOqB_UgeeMIiCWdWee2vxGkm',
             large: 'https://lh3.googleusercontent.com/d/1z3VH_32FxKoUpLBx6_DyEnK00bctBAj0',
             scenarios: [
-                { q: "Assalamu'alaikum, Pak Amil. Saya memiliki 100 gram emas murni yang sudah saya simpan selama satu tahun penuh. Berapa besar zakat yang wajib saya keluarkan?", options: ["1 gram", "2 gram", "2.5 gram", "5 gram"], correct: 2, reward: "Alhamdulillah, terima kasih atas bimbingannya. Saya jadi paham perhitungannya." },
-                { q: "Apa syarat utama agar harta simpanan seperti tabungan atau emas wajib dikeluarkan zakatnya menurut syariat?", options: ["Milik sendiri dan halal", "Milik sendiri dan mencapai haul", "Mencapai nisab dan haul", "Milik bersama"], correct: 2, reward: "Benar sekali, harta saya sudah memenuhi nisab dan haul." },
-                { q: "Saya dengar nisab emas adalah 85 gram. Jika emas saya sekarang 170 gram dan sudah haul, berapa gram zakat yang harus saya bayarkan?", options: ["2.125 gram", "4.25 gram", "8.5 gram", "17 gram"], correct: 1, reward: "Jazakallah, perhitungan 2.5% dari 170 gram adalah 4.25 gram." },
-                { q: "Saya memiliki perak seberat 700 gram yang sudah tersimpan selama setahun. Nisab perak 595 gram. Berapa zakat perak yang harus saya keluarkan?", options: ["14 gram", "17.5 gram", "35 gram", "70 gram"], correct: 1, reward: "Terima kasih, 2.5% dari 700 gram adalah 17.5 gram." },
-                { q: "Tabungan saya saat ini Rp200 juta. Harga emas murni per gramnya Rp1,2 juta. Apakah saya sudah wajib mengeluarkan zakat mal? Jika iya, berapa persen?", options: ["Belum wajib", "Wajib 2.5%", "Wajib 5%", "Wajib 10%"], correct: 1, reward: "Baik, berarti saya wajib mengeluarkan 2.5% dari total tabungan." },
-                { q: "Saya baru saja menemukan harta karun (rikaz) senilai Rp500 juta. Berapa persen zakat yang harus saya tunaikan atas temuan ini?", options: ["2.5%", "5%", "10%", "20%"], correct: 3, reward: "Wah, 20% langsung ya. Siap saya tunaikan segera." },
-                { q: "Kapan sebenarnya zakat mal itu wajib dikeluarkan? Apakah cukup hanya mencapai nisab saja?", options: ["Hanya mencapai nisab", "Hanya genap satu tahun (haul)", "Nisab dan haul terpenuhi", "Tidak keduanya"], correct: 2, reward: "Benar, nisab dan haul adalah dua syarat yang tidak terpisahkan." },
-                { q: "Saya memiliki 4 ekor sapi yang sudah mencapai haul. Berapa zakat ternak sapi yang harus saya bayarkan?", options: ["1 ekor sapi umur 1 tahun", "1 ekor sapi umur 2 tahun", "Tidak wajib zakat", "2 ekor kambing"], correct: 2, reward: "Oh belum wajib ya, terima kasih informasinya." },
-                { q: "Saya beternak kambing dan jumlahnya sudah 40 ekor selama setahun. Berapa zakat yang harus saya keluarkan?", options: ["1 ekor kambing", "2 ekor kambing", "3 ekor kambing", "4 ekor kambing"], correct: 0, reward: "Benar, untuk 40-120 ekor kambing zakatnya 1 ekor kambing." }
+                { q: "Assalamu'alaikum, Pak Amil. Saya memiliki 100 gram emas murni yang sudah saya simpan selama satu tahun penuh. Berapa besar zakat yang wajib saya keluarkan?",
+                    options: ["1 gram", "2 gram", "2.5 gram", "5 gram"], correct: 2,
+                    reward: "Alhamdulillah, terima kasih atas bimbingannya. Saya jadi paham perhitungannya." },
+                { q: "Apa syarat utama agar harta simpanan seperti tabungan atau emas wajib dikeluarkan zakatnya menurut syariat?",
+                    options: ["Milik sendiri dan halal", "Milik sendiri dan mencapai haul",
+                        "Mencapai nisab dan haul", "Milik bersama"
+                    ], correct: 2,
+                    reward: "Benar sekali, harta saya sudah memenuhi nisab dan haul." },
+                { q: "Saya dengar nisab emas adalah 85 gram. Jika emas saya sekarang 170 gram dan sudah haul, berapa gram zakat yang harus saya bayarkan?",
+                    options: ["2.125 gram", "4.25 gram", "8.5 gram", "17 gram"], correct: 1,
+                    reward: "Jazakallah, perhitungan 2.5% dari 170 gram adalah 4.25 gram." },
+                { q: "Saya memiliki perak seberat 700 gram yang sudah tersimpan selama setahun. Nisab perak 595 gram. Berapa zakat perak yang harus saya keluarkan?",
+                    options: ["14 gram", "17.5 gram", "35 gram", "70 gram"], correct: 1,
+                    reward: "Terima kasih, 2.5% dari 700 gram adalah 17.5 gram." },
+                { q: "Tabungan saya saat ini Rp200 juta. Harga emas murni per gramnya Rp1,2 juta. Apakah saya sudah wajib mengeluarkan zakat mal? Jika iya, berapa persen?",
+                    options: ["Belum wajib", "Wajib 2.5%", "Wajib 5%", "Wajib 10%"], correct: 1,
+                    reward: "Baik, berarti saya wajib mengeluarkan 2.5% dari total tabungan." },
+                { q: "Saya baru saja menemukan harta karun (rikaz) senilai Rp500 juta. Berapa persen zakat yang harus saya tunaikan atas temuan ini?",
+                    options: ["2.5%", "5%", "10%", "20%"], correct: 3,
+                    reward: "Wah, 20% langsung ya. Siap saya tunaikan segera." },
+                { q: "Kapan sebenarnya zakat mal itu wajib dikeluarkan? Apakah cukup hanya mencapai nisab saja?",
+                    options: ["Hanya mencapai nisab", "Hanya genap satu tahun (haul)",
+                        "Nisab dan haul terpenuhi", "Tidak keduanya"
+                    ], correct: 2,
+                    reward: "Benar, nisab dan haul adalah dua syarat yang tidak terpisahkan." },
+                { q: "Saya memiliki 4 ekor sapi yang sudah mencapai haul. Berapa zakat ternak sapi yang harus saya bayarkan?",
+                    options: ["1 ekor sapi umur 1 tahun", "1 ekor sapi umur 2 tahun", "Tidak wajib zakat",
+                        "2 ekor kambing"
+                    ], correct: 2, reward: "Oh belum wajib ya, terima kasih informasinya." },
+                { q: "Saya beternak kambing dan jumlahnya sudah 40 ekor selama setahun. Berapa zakat yang harus saya keluarkan?",
+                    options: ["1 ekor kambing", "2 ekor kambing", "3 ekor kambing", "4 ekor kambing"],
+                    correct: 0, reward: "Benar, untuk 40-120 ekor kambing zakatnya 1 ekor kambing." }
             ]
-        },
-        { 
-            type: 'Sedang', 
+        }, {
+            type: 'Sedang',
             small: 'https://lh3.googleusercontent.com/d/1BqUiR8CnwaJM-m53DrQILRWz5hKFjHPA',
             large: 'https://lh3.googleusercontent.com/d/10SXyQyk1jNx6VFMGvXH9pJDObn1Qivfc',
             scenarios: [
-                { q: "Tabungan saya saat ini Rp100 juta. Harga emas per gram Rp1 juta. Apakah saya sudah wajib zakat? Tolong jelaskan.", options: ["Belum, karena nisab 150 gram", "Belum, karena nisab 120 gram", "Sudah, karena nisab 85 gram emas", "Sudah, karena nisab 50 gram"], correct: 2, reward: "Ah begitu ya. Berarti tabungan saya sudah melewati batas nisab emas." },
-                { q: "Setiap bulan saya menerima gaji bersih Rp10 juta. Berapa zakat penghasilan yang sebaiknya saya sisihkan per bulan?", options: ["Rp100.000", "Rp250.000", "Rp500.000", "Tidak wajib"], correct: 1, reward: "Terima kasih. 2.5% dari 10 juta adalah 250 ribu, terasa ringan untuk membersihkan harta." },
-                { q: "Saya punya lahan pertanian tadah hujan. Tahun ini panen gabah kering mencapai 1 ton. Berapa kilogram zakat yang harus saya keluarkan?", options: ["50 kg", "100 kg", "150 kg", "200 kg"], correct: 1, reward: "Tepat, untuk tadah hujan zakatnya 10% yaitu 100 kg." },
-                { q: "Hasil panen padi saya tahun ini 2 ton dengan sistem irigasi berbayar. Berapa zakat pertanian yang wajib saya tunaikan?", options: ["100 kg", "150 kg", "200 kg", "250 kg"], correct: 0, reward: "Benar, karena ada biaya irigasi zakatnya 5% yaitu 100 kg." },
-                { q: "Berapa batas minimal (nisab) hasil pertanian yang wajib dizakati menurut mayoritas ulama?", options: ["653 kg gabah", "750 kg beras", "520 kg jagung", "300 kg gandum"], correct: 0, reward: "Benar, sekitar 653 kg gabah atau setara 5 wasaq." },
-                { q: "Saya memiliki portofolio saham di perusahaan. Bagaimana cara menghitung zakat saham yang benar?", options: ["2.5% dari nilai pasar", "5% dari nilai buku", "Hanya dari dividen", "Tidak wajib"], correct: 0, reward: "Benar, nilai pasar saham saat haul dikalikan 2.5%." },
-                { q: "Apakah zakat profesi atau penghasilan boleh dikeluarkan setiap bulan tanpa menunggu haul?", options: ["Tidak boleh", "Boleh, asal mencapai nisab", "Boleh tanpa syarat", "Hanya setahun sekali"], correct: 1, reward: "Boleh, selama gaji bulanan sudah mencapai nisab 85 gram emas." },
-                { q: "Saya memiliki emas 200 gram dan perak 600 gram. Apakah nisabnya digabungkan?", options: ["Dijumlahkan totalnya", "Dipisah, masing-masing dihitung sendiri", "Diambil nisab terbesar", "Tidak perlu dizakati"], correct: 1, reward: "Benar, nisab emas dan perak dihitung terpisah." }
+                { q: "Tabungan saya saat ini Rp100 juta. Harga emas per gram Rp1 juta. Apakah saya sudah wajib zakat? Tolong jelaskan.",
+                    options: ["Belum, karena nisab 150 gram", "Belum, karena nisab 120 gram",
+                        "Sudah, karena nisab 85 gram emas", "Sudah, karena nisab 50 gram"
+                    ], correct: 2,
+                    reward: "Ah begitu ya. Berarti tabungan saya sudah melewati batas nisab emas." },
+                { q: "Setiap bulan saya menerima gaji bersih Rp10 juta. Berapa zakat penghasilan yang sebaiknya saya sisihkan per bulan?",
+                    options: ["Rp100.000", "Rp250.000", "Rp500.000", "Tidak wajib"], correct: 1,
+                    reward: "Terima kasih. 2.5% dari 10 juta adalah 250 ribu, terasa ringan untuk membersihkan harta." },
+                { q: "Saya punya lahan pertanian tadah hujan. Tahun ini panen gabah kering mencapai 1 ton. Berapa kilogram zakat yang harus saya keluarkan?",
+                    options: ["50 kg", "100 kg", "150 kg", "200 kg"], correct: 1,
+                    reward: "Tepat, untuk tadah hujan zakatnya 10% yaitu 100 kg." },
+                { q: "Hasil panen padi saya tahun ini 2 ton dengan sistem irigasi berbayar. Berapa zakat pertanian yang wajib saya tunaikan?",
+                    options: ["100 kg", "150 kg", "200 kg", "250 kg"], correct: 0,
+                    reward: "Benar, karena ada biaya irigasi zakatnya 5% yaitu 100 kg." },
+                { q: "Berapa batas minimal (nisab) hasil pertanian yang wajib dizakati menurut mayoritas ulama?",
+                    options: ["653 kg gabah", "750 kg beras", "520 kg jagung", "300 kg gandum"], correct: 0,
+                    reward: "Benar, sekitar 653 kg gabah atau setara 5 wasaq." },
+                { q: "Saya memiliki portofolio saham di perusahaan. Bagaimana cara menghitung zakat saham yang benar?",
+                    options: ["2.5% dari nilai pasar", "5% dari nilai buku", "Hanya dari dividen", "Tidak wajib"],
+                    correct: 0, reward: "Benar, nilai pasar saham saat haul dikalikan 2.5%." },
+                { q: "Apakah zakat profesi atau penghasilan boleh dikeluarkan setiap bulan tanpa menunggu haul?",
+                    options: ["Tidak boleh", "Boleh, asal mencapai nisab", "Boleh tanpa syarat",
+                    "Hanya setahun sekali"], correct: 1,
+                    reward: "Boleh, selama gaji bulanan sudah mencapai nisab 85 gram emas." },
+                { q: "Saya memiliki emas 200 gram dan perak 600 gram. Apakah nisabnya digabungkan?",
+                    options: ["Dijumlahkan totalnya", "Dipisah, masing-masing dihitung sendiri",
+                        "Diambil nisab terbesar", "Tidak perlu dizakati"
+                    ], correct: 1, reward: "Benar, nisab emas dan perak dihitung terpisah." }
             ]
-        },
-        { 
-            type: 'Miskin', 
+        }, {
+            type: 'Miskin',
             small: 'https://lh3.googleusercontent.com/d/1Oqs30_E-BbLRsKkUiYRrZM6k5eoA6LQO',
             large: 'https://lh3.googleusercontent.com/d/1E--RLpNi4dwMLtJNjNpY3c9Gciwby3Uz',
             scenarios: [
-                { q: "Saya bekerja sebagai buruh harian dengan upah yang tidak menentu dan jauh di bawah nisab. Apakah saya tetap wajib mengeluarkan zakat mal?", options: ["Ya, wajib", "Tidak wajib", "Wajib jika diminta", "Wajib 10%"], correct: 1, reward: "Alhamdulillah, saya lega. Saya akan tetap bersedekah semampu saya." },
-                { q: "Bulan Ramadhan tiba. Berapa ukuran zakat fitrah yang harus saya bayarkan untuk setiap jiwa dalam keluarga saya?", options: ["1.5 kg beras", "2.5 kg atau 3.5 liter", "5 kg beras", "10 liter beras"], correct: 1, reward: "Baik, saya akan siapkan beras 2.5 kg atau setara 3.5 liter per orang." },
-                { q: "Kapan waktu yang paling utama untuk menunaikan zakat fitrah agar tidak terlambat?", options: ["Awal Ramadhan", "Malam Idul Fitri", "Setelah shalat Id", "Sebelum shalat Id"], correct: 3, reward: "Benar, waktu utama adalah sebelum pelaksanaan shalat Idul Fitri." },
-                { q: "Apakah diperbolehkan membayar zakat fitrah menggunakan uang tunai sebagai pengganti beras?", options: ["Tidak boleh sama sekali", "Boleh, senilai harga beras", "Hanya boleh beras", "Boleh tanpa batasan"], correct: 1, reward: "Boleh menurut sebagian ulama, asalkan nilainya setara dengan makanan pokok." },
-                { q: "Siapa saja golongan yang berhak menerima zakat menurut Al-Qur'an?", options: ["Fakir dan miskin", "Amil, mualaf, riqab, gharim", "Fisabilillah dan ibnu sabil", "Semua golongan tersebut"], correct: 3, reward: "Benar, delapan asnaf mustahik zakat." },
-                { q: "Apakah saya boleh memberikan zakat kepada saudara kandung saya yang hidup dalam kekurangan?", options: ["Tidak boleh", "Boleh, bahkan utama", "Hanya jika yatim", "Hukumnya wajib"], correct: 1, reward: "Boleh, membantu keluarga yang membutuhkan mendapat pahala ganda." },
-                { q: "Berapa gram batas minimal (nisab) emas yang mewajibkan zakat?", options: ["65 gram", "75 gram", "85 gram", "95 gram"], correct: 2, reward: "Betul, 85 gram emas murni adalah nisabnya." },
-                { q: "Jika saya sudah membayar zakat mal, apakah kewajiban zakat fitrah menjadi gugur?", options: ["Ya, sudah termasuk", "Tidak, keduanya kewajiban terpisah", "Tergantung niat", "Hanya jika mampu"], correct: 1, reward: "Tepat, zakat fitrah adalah kewajiban tahunan yang berbeda dengan zakat mal." }
+                { q: "Saya bekerja sebagai buruh harian dengan upah yang tidak menentu dan jauh di bawah nisab. Apakah saya tetap wajib mengeluarkan zakat mal?",
+                    options: ["Ya, wajib", "Tidak wajib", "Wajib jika diminta", "Wajib 10%"], correct: 1,
+                    reward: "Alhamdulillah, saya lega. Saya akan tetap bersedekah semampu saya." },
+                { q: "Bulan Ramadhan tiba. Berapa ukuran zakat fitrah yang harus saya bayarkan untuk setiap jiwa dalam keluarga saya?",
+                    options: ["1.5 kg beras", "2.5 kg atau 3.5 liter", "5 kg beras", "10 liter beras"],
+                    correct: 1, reward: "Baik, saya akan siapkan beras 2.5 kg atau setara 3.5 liter per orang." },
+                { q: "Kapan waktu yang paling utama untuk menunaikan zakat fitrah agar tidak terlambat?",
+                    options: ["Awal Ramadhan", "Malam Idul Fitri", "Setelah shalat Id", "Sebelum shalat Id"],
+                    correct: 3, reward: "Benar, waktu utama adalah sebelum pelaksanaan shalat Idul Fitri." },
+                { q: "Apakah diperbolehkan membayar zakat fitrah menggunakan uang tunai sebagai pengganti beras?",
+                    options: ["Tidak boleh sama sekali", "Boleh, senilai harga beras", "Hanya boleh beras",
+                        "Boleh tanpa batasan"
+                    ], correct: 1,
+                    reward: "Boleh menurut sebagian ulama, asalkan nilainya setara dengan makanan pokok." },
+                { q: "Siapa saja golongan yang berhak menerima zakat menurut Al-Qur'an?",
+                    options: ["Fakir dan miskin", "Amil, mualaf, riqab, gharim", "Fisabilillah dan ibnu sabil",
+                        "Semua golongan tersebut"
+                    ], correct: 3, reward: "Benar, delapan asnaf mustahik zakat." },
+                { q: "Apakah saya boleh memberikan zakat kepada saudara kandung saya yang hidup dalam kekurangan?",
+                    options: ["Tidak boleh", "Boleh, bahkan utama", "Hanya jika yatim", "Hukumnya wajib"],
+                    correct: 1, reward: "Boleh, membantu keluarga yang membutuhkan mendapat pahala ganda." },
+                { q: "Berapa gram batas minimal (nisab) emas yang mewajibkan zakat?",
+                    options: ["65 gram", "75 gram", "85 gram", "95 gram"], correct: 2,
+                    reward: "Betul, 85 gram emas murni adalah nisabnya." },
+                { q: "Jika saya sudah membayar zakat mal, apakah kewajiban zakat fitrah menjadi gugur?",
+                    options: ["Ya, sudah termasuk", "Tidak, keduanya kewajiban terpisah", "Tergantung niat",
+                        "Hanya jika mampu"
+                    ], correct: 1,
+                    reward: "Tepat, zakat fitrah adalah kewajiban tahunan yang berbeda dengan zakat mal." }
             ]
+        }];
+        // ======================================================
+
+        function toggleFullScreen() {
+            playSound('click');
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else document.exitFullscreen();
         }
-    ];
-    // ======================================================
 
-    function toggleFullScreen() {
-        playSound('click');
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-        else document.exitFullscreen();
-    }
+        function resize() { canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
 
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resize); resize();
+        function showDifficulty() {
+            playSound('click');
+            document.getElementById('menu-overlay').style.display = 'none';
+            document.getElementById('difficulty-menu').style.display = 'flex';
+        }
 
-    function showDifficulty() { 
-        playSound('click');
-        document.getElementById('menu-overlay').style.display = 'none';
-        document.getElementById('difficulty-menu').style.display = 'flex';
-    }
-    function setDifficulty(diff) {
-        playSound('click');
-        difficulty = diff;
-        timeLimit = diff === 'easy' ? 30 : (diff === 'medium' ? 22 : 15);
-        document.getElementById('difficulty-menu').style.display = 'none';
-        document.getElementById('name-menu').style.display = 'flex';
-    }
+        function setDifficulty(diff) {
+            playSound('click');
+            difficulty = diff;
+            timeLimit = diff === 'easy' ? 30 : (diff === 'medium' ? 22 : 15);
+            document.getElementById('difficulty-menu').style.display = 'none';
+            document.getElementById('name-menu').style.display = 'flex';
+        }
 
-    function typeChar(c) {
-        playSound('click');
-        if(playerName.length < 8) {
-            playerName += c;
+        function typeChar(c) {
+            playSound('click');
+            if (playerName.length < 8) {
+                playerName += c;
+                document.getElementById('name-input-display').innerText = playerName || "_";
+                document.getElementById('register-btn').disabled = playerName.length < 2;
+            }
+        }
+
+        function backspace() {
+            playSound('click');
+            playerName = playerName.slice(0, -1);
             document.getElementById('name-input-display').innerText = playerName || "_";
             document.getElementById('register-btn').disabled = playerName.length < 2;
         }
-    }
-    function backspace() {
-        playSound('click');
-        playerName = playerName.slice(0, -1);
-        document.getElementById('name-input-display').innerText = playerName || "_";
-        document.getElementById('register-btn').disabled = playerName.length < 2;
-    }
 
-    function finalizeRegistration() {
-        playSound('click');
-        document.getElementById('name-menu').style.display = 'none';
-        document.getElementById('ui-top').style.display = 'block';
-        document.getElementById('amil-name-display').innerText = playerName;
-        bottomBar.style.display = 'block';
-        gameActive = true;
-        spawnNPC();
-        animate();
-    }
-
-    function useSeniorHelp() {
-        if (!seniorAvailable || !gameActive || isWaitingForNext || seniorActive) return;
-        playSound('senior');
-        seniorActive = true; seniorAvailable = false;
-        document.getElementById('senior-status').innerText = "AKTIF";
-        document.getElementById('senior-help-btn').disabled = true;
-        seniorPortrait.style.display = 'block';
-        setTimeout(() => { seniorPortrait.style.opacity = '1'; seniorPortrait.style.transform = 'translateX(0)'; }, 10);
-        const btns = Array.from(optionsContainer.querySelectorAll('.option-btn'));
-        const correct = btns[currentNPC.correctIndex];
-        const incorrect = btns.filter((_,i)=> i!==currentNPC.correctIndex);
-        const rand = incorrect[Math.floor(Math.random()*incorrect.length)];
-        btns.forEach(b => { if(b!==correct && b!==rand) { b.style.opacity='0'; b.style.pointerEvents='none'; }});
-        showFeedback("SENIOR MEMBANTU!", "#3b82f6");
-    }
-
-    function startSeniorCooldown() {
-        seniorActive = false; currentCooldown = seniorCooldownTime;
-        const btn = document.getElementById('senior-help-btn'), status = document.getElementById('senior-status'), timer = document.getElementById('senior-timer'), overlay = document.getElementById('senior-cooldown-overlay');
-        status.innerText = "COOLDOWN"; timer.classList.remove('hidden');
-        const cd = setInterval(() => {
-            currentCooldown--; timer.innerText = currentCooldown+"s"; overlay.style.height = (currentCooldown/seniorCooldownTime*100)+"%";
-            if(currentCooldown<=0 || !gameActive){ clearInterval(cd); seniorAvailable=true; status.innerText="TERSEDIA"; timer.classList.add('hidden'); btn.disabled=false; overlay.style.height="0%"; }
-        }, 1000);
-    }
-
-    function dismissSenior() {
-        if(!seniorActive) return;
-        seniorPortrait.style.opacity='0'; seniorPortrait.style.transform='translateX(-100px)';
-        setTimeout(()=>{ seniorPortrait.style.display='none'; startSeniorCooldown(); },500);
-    }
-
-    class NPC {
-        constructor(proto) {
-            this.name = randomNames[Math.floor(Math.random()*randomNames.length)];
-            this.img = new Image(); this.img.src = proto.small; this.largeImg = proto.large;
-            const sc = proto.scenarios[Math.floor(Math.random()*proto.scenarios.length)];
-            this.question = sc.q; this.options = sc.options; this.correctIndex = sc.correct; this.rewardDialog = sc.reward;
-            this.width = 400; this.height = 420; this.x = canvas.width + 100;
-            this.y = canvas.height - 200 - this.height; 
-            this.targetX = canvas.width/2 + 100 - this.width/2; this.speed = 12; this.state = 'walking';
+        function finalizeRegistration() {
+            playSound('click');
+            document.getElementById('name-menu').style.display = 'none';
+            document.getElementById('ui-top').style.display = 'block';
+            document.getElementById('amil-name-display').innerText = playerName;
+            bottomBar.style.display = 'block';
+            gameActive = true;
+            spawnNPC();
+            animate();
         }
-        draw() { ctx.save(); ctx.shadowBlur=30; ctx.shadowColor='rgba(0,0,0,0.3)'; ctx.drawImage(this.img, this.x, this.y, this.width, this.height); ctx.restore(); }
-        update() {
-            if(this.state==='walking'){ if(this.x>this.targetX) this.x-=this.speed; else { this.state='talking'; triggerDialog(this); } }
-            else if(this.state==='leaving'){ this.x-=this.speed*1.8; if(this.x<-this.width-200) spawnNPC(); }
+
+        function useSeniorHelp() {
+            if (!seniorAvailable || !gameActive || isWaitingForNext || seniorActive) return;
+            playSound('senior');
+            seniorActive = true;
+            seniorAvailable = false;
+            document.getElementById('senior-status').innerText = "AKTIF";
+            document.getElementById('senior-help-btn').disabled = true;
+            seniorPortrait.style.display = 'block';
+            setTimeout(() => { seniorPortrait.style.opacity = '1';
+                seniorPortrait.style.transform = 'translateX(0)'; }, 10);
+            const btns = Array.from(optionsContainer.querySelectorAll('.option-btn'));
+            const correct = btns[currentNPC.correctIndex];
+            const incorrect = btns.filter((_, i) => i !== currentNPC.correctIndex);
+            const rand = incorrect[Math.floor(Math.random() * incorrect.length)];
+            btns.forEach(b => { if (b !== correct && b !== rand) { b.style.opacity = '0';
+                    b.style.pointerEvents = 'none'; } });
+            showFeedback("SENIOR MEMBANTU!", "#3b82f6");
         }
-    }
 
-    function startTimer() {
-        timeLeft = timeLimit; updateTimerBar(); clearInterval(timerInterval);
-        timerInterval = setInterval(()=>{ if(isWaitingForNext) return; timeLeft-=0.1; if(timeLeft<=0){timeLeft=0; handleTimeout();} updateTimerBar(); },100);
-    }
-    function updateTimerBar() { let p = (timeLeft/timeLimit)*100; timerBar.style.width=p+"%"; timerBar.style.background = p<30?"#ef4444":(p<60?"#f59e0b":"#10b981"); }
-
-    function spawnNPC() {
-        if(!gameActive) return; isWaitingForNext = false;
-        let avail = npcPrototypes;
-        if(lastNPCType) { avail = npcPrototypes.filter(p=>p.type!==lastNPCType); if(avail.length===0) avail=npcPrototypes; }
-        const proto = avail[Math.floor(Math.random()*avail.length)];
-        lastNPCType = proto.type;
-        currentNPC = new NPC(proto);
-    }
-
-    function triggerDialog(npc) {
-        npcNameUI.innerText = npc.name; dialogTextUI.innerText = npc.question; optionsContainer.innerHTML='';
-        npc.options.forEach((opt,i)=>{ let b=document.createElement('button'); b.className='option-btn'; b.innerText=opt; b.onclick=(e)=>{e.stopPropagation(); checkAnswer(i);}; optionsContainer.appendChild(b); });
-        npcPortrait.src=npc.largeImg; npcPortrait.style.display='block'; npcPortrait.style.opacity='0'; npcPortrait.style.transform='translateY(20px)';
-        setTimeout(()=>{ npcPortrait.style.opacity='1'; npcPortrait.style.transform='translateY(0)'; },50);
-        startTimer();
-    }
-
-    function checkAnswer(index) {
-        if(isWaitingForNext) return;
-        clearInterval(timerInterval); isWaitingForNext = true;
-        const correct = index === currentNPC.correctIndex;
-        if(correct) {
-            playSound('correct');
-            score += 10; updateSatisfaction(5);
-            showFeedback("TEPAT!", "#10b981");
-            dialogTextUI.innerText = '"'+currentNPC.rewardDialog+'"';
-        } else {
-            playSound('wrong');
-            updateSatisfaction(-15);
-            showFeedback("SALAH!", "#ef4444");
-            dialogTextUI.innerText = '"Maaf, jawaban Anda kurang tepat. Mari perbaiki di kesempatan lain."';
+        function startSeniorCooldown() {
+            seniorActive = false;
+            currentCooldown = seniorCooldownTime;
+            const btn = document.getElementById('senior-help-btn'),
+                status = document.getElementById('senior-status'),
+                timer = document.getElementById('senior-timer'),
+                overlay = document.getElementById('senior-cooldown-overlay');
+            status.innerText = "COOLDOWN";
+            timer.classList.remove('hidden');
+            const cd = setInterval(() => {
+                currentCooldown--;
+                timer.innerText = currentCooldown + "s";
+                overlay.style.height = (currentCooldown / seniorCooldownTime * 100) + "%";
+                if (currentCooldown <= 0 || !gameActive) { clearInterval(cd);
+                    seniorAvailable = true;
+                    status.innerText = "TERSEDIA";
+                    timer.classList.add('hidden');
+                    btn.disabled = false;
+                    overlay.style.height = "0%"; }
+            }, 1000);
         }
-        scoreUI.innerText = score;
-        dismissSenior();
-        if(score >= 100) { winGame(); return; }
-        prepareNext();
-    }
 
-    function handleTimeout() {
-        if(isWaitingForNext) return;
-        playSound('timeout');
-        clearInterval(timerInterval); isWaitingForNext = true;
-        updateSatisfaction(-20);
-        showFeedback("WAKTU HABIS!", "#f59e0b");
-        dialogTextUI.innerText = '"Waktu berpikir Anda habis. Silakan lebih cepat lain kali."';
-        optionsContainer.querySelectorAll('button').forEach(b=>b.disabled=true);
-        dismissSenior();
-        prepareNext();
-    }
-
-    function prepareNext() {
-        optionsContainer.innerHTML = '<div class="col-span-2 text-lg italic opacity-70 animate-pulse mt-4">Klik kotak dialog ini untuk lanjut...</div>';
-        bottomBar.onclick = nextNPC;
-    }
-
-    function updateSatisfaction(val) {
-        satisfaction = Math.max(-10, Math.min(100, satisfaction+val));
-        satBar.style.width = Math.max(0,satisfaction)+"%";
-        satBar.style.background = satisfaction<30?"#ef4444":(satisfaction<70?"#f59e0b":"#10b981");
-        if(satisfaction <= 0) { gameActive = false; clearInterval(timerInterval); backToMainMenu(); }
-    }
-
-    function showFeedback(text, color) {
-        feedbackOverlay.innerText=text; feedbackOverlay.style.color=color; feedbackOverlay.style.display='block';
-        setTimeout(()=>feedbackOverlay.style.display='none',1000);
-    }
-
-    function nextNPC() {
-        if(!isWaitingForNext) return;
-        bottomBar.onclick = null;
-        npcPortrait.style.opacity='0';
-        currentNPC.state='leaving';
-        npcNameUI.innerText="Antrean";
-        dialogTextUI.innerText="Tamu berikutnya sedang menuju meja Anda...";
-        setTimeout(()=>npcPortrait.style.display='none',400);
-    }
-
-    function winGame() {
-        gameActive = false; clearInterval(timerInterval);
-        let title = '';
-        if(difficulty==='easy') title='Amil Junior';
-        else if(difficulty==='medium') title='Amil';
-        else title='Amil Senior';
-        playSound('win');
-        alert(`🏆 Selamat! Anda meraih 100 poin di mode ${difficulty}.\nGelar: ${title}`);
-        backToMainMenu();
-    }
-
-    function backToMainMenu() {
-        playSound('click');
-        gameActive = false; clearInterval(timerInterval);
-        score = 0; satisfaction = 100; seniorAvailable = true; seniorActive = false;
-        document.getElementById('ui-top').style.display = 'none';
-        bottomBar.style.display = 'none';
-        npcPortrait.style.display = 'none';
-        seniorPortrait.style.display = 'none';
-        document.getElementById('menu-overlay').style.display = 'flex';
-        document.getElementById('difficulty-menu').style.display = 'none';
-        document.getElementById('name-menu').style.display = 'none';
-        document.getElementById('name-input-display').innerText = '_';
-        document.getElementById('register-btn').disabled = true;
-        playerName = "";
-        lastNPCType = null;
-        if(audioCtx) audioCtx.close().then(()=>audioCtx=null);
-    }
-
-    function showTitleInfo() {
-        playSound('click');
-        document.getElementById('title-info-modal').style.display = 'flex';
-    }
-    function hideTitleInfo() {
-        playSound('click');
-        document.getElementById('title-info-modal').style.display = 'none';
-    }
-
-    function animate() { if(!gameActive) return; ctx.clearRect(0,0,canvas.width,canvas.height); if(currentNPC){ currentNPC.update(); currentNPC.draw(); } requestAnimationFrame(animate); }
-
-    window.addEventListener('keydown', e => {
-        if(document.getElementById('name-menu').style.display==='flex') {
-            if(e.key==='Backspace') backspace();
-            else if(e.key.length===1) typeChar(e.key.toUpperCase());
+        function dismissSenior() {
+            if (!seniorActive) return;
+            seniorPortrait.style.opacity = '0';
+            seniorPortrait.style.transform = 'translateX(-100px)';
+            setTimeout(() => { seniorPortrait.style.display = 'none';
+                startSeniorCooldown(); }, 500);
         }
-    });
-</script>
+
+        class NPC {
+            constructor(proto) {
+                this.name = randomNames[Math.floor(Math.random() * randomNames.length)];
+                this.img = new Image();
+                this.img.src = proto.small;
+                this.largeImg = proto.large;
+                const sc = proto.scenarios[Math.floor(Math.random() * proto.scenarios.length)];
+                this.question = sc.q;
+                this.options = sc.options;
+                this.correctIndex = sc.correct;
+                this.rewardDialog = sc.reward;
+                this.width = 400;
+                this.height = 420;
+                this.x = canvas.width + 100;
+                this.y = canvas.height - 200 - this.height;
+                this.targetX = canvas.width / 2 + 100 - this.width / 2;
+                this.speed = 12;
+                this.state = 'walking';
+            }
+            draw() { ctx.save();
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+                ctx.restore(); }
+            update() {
+                if (this.state === 'walking') { if (this.x > this.targetX) this.x -= this.speed;
+                    else { this.state = 'talking';
+                        triggerDialog(this); } } else if (this.state === 'leaving') { this.x -= this.speed * 1.8; if (
+                        this.x < -this.width - 200) spawnNPC(); }
+            }
+        }
+
+        function startTimer() {
+            timeLeft = timeLimit;
+            updateTimerBar();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => { if (isWaitingForNext) return;
+                timeLeft -= 0.1; if (timeLeft <= 0) { timeLeft = 0;
+                    handleTimeout(); }
+                updateTimerBar(); }, 100);
+        }
+
+        function updateTimerBar() { let p = (timeLeft / timeLimit) * 100;
+            timerBar.style.width = p + "%";
+            timerBar.style.background = p < 30 ? "#ef4444" : (p < 60 ? "#f59e0b" : "#10b981"); }
+
+        function spawnNPC() {
+            if (!gameActive) return;
+            isWaitingForNext = false;
+            let avail = npcPrototypes;
+            if (lastNPCType) { avail = npcPrototypes.filter(p => p.type !== lastNPCType); if (avail.length === 0) avail =
+                    npcPrototypes; }
+            const proto = avail[Math.floor(Math.random() * avail.length)];
+            lastNPCType = proto.type;
+            currentNPC = new NPC(proto);
+        }
+
+        function triggerDialog(npc) {
+            npcNameUI.innerText = npc.name;
+            dialogTextUI.innerText = npc.question;
+            optionsContainer.innerHTML = '';
+            npc.options.forEach((opt, i) => { let b = document.createElement('button');
+                b.className = 'option-btn';
+                b.innerText = opt;
+                b.onclick = (e) => { e.stopPropagation();
+                    checkAnswer(i); };
+                optionsContainer.appendChild(b); });
+            npcPortrait.src = npc.largeImg;
+            npcPortrait.style.display = 'block';
+            npcPortrait.style.opacity = '0';
+            npcPortrait.style.transform = 'translateY(20px)';
+            setTimeout(() => { npcPortrait.style.opacity = '1';
+                npcPortrait.style.transform = 'translateY(0)'; }, 50);
+            startTimer();
+        }
+
+        function checkAnswer(index) {
+            if (isWaitingForNext) return;
+            clearInterval(timerInterval);
+            isWaitingForNext = true;
+            const correct = index === currentNPC.correctIndex;
+            if (correct) {
+                playSound('correct');
+                score += 10;
+                updateSatisfaction(5);
+                if (!gameActive) return;
+                showFeedback("TEPAT!", "#10b981");
+                dialogTextUI.innerText = '"' + currentNPC.rewardDialog + '"';
+            } else {
+                playSound('wrong');
+                updateSatisfaction(-15);
+                if (!gameActive) return;
+                showFeedback("SALAH!", "#ef4444");
+                dialogTextUI.innerText = '"Maaf, jawaban Anda kurang tepat. Mari perbaiki di kesempatan lain."';
+            }
+            scoreUI.innerText = score;
+            dismissSenior();
+            if (score >= 100) { winGame(); return; }
+            prepareNext();
+        }
+
+        function handleTimeout() {
+            if (isWaitingForNext) return;
+            playSound('timeout');
+            clearInterval(timerInterval);
+            isWaitingForNext = true;
+            updateSatisfaction(-20);
+            if (!gameActive) return;
+            showFeedback("WAKTU HABIS!", "#f59e0b");
+            dialogTextUI.innerText = '"Waktu berpikir Anda habis. Silakan lebih cepat lain kali."';
+            optionsContainer.querySelectorAll('button').forEach(b => b.disabled = true);
+            dismissSenior();
+            prepareNext();
+        }
+
+        function prepareNext() {
+            optionsContainer.innerHTML =
+                '<div class="col-span-2 text-lg italic opacity-70 animate-pulse mt-4">Klik kotak dialog ini untuk lanjut...</div>';
+            bottomBar.onclick = nextNPC;
+        }
+
+        function updateSatisfaction(val) {
+            satisfaction = Math.max(0, Math.min(100, satisfaction + val));
+            satBar.style.width = Math.max(0, satisfaction) + "%";
+            satBar.style.background = satisfaction < 30 ? "#ef4444" : (satisfaction < 70 ? "#f59e0b" : "#10b981");
+            if (satisfaction <= 0) {
+                gameActive = false;
+                clearInterval(timerInterval);
+                triggerGameOver();
+            }
+        }
+
+        function showFeedback(text, color) {
+            feedbackOverlay.innerText = text;
+            feedbackOverlay.style.color = color;
+            feedbackOverlay.style.display = 'block';
+            setTimeout(() => feedbackOverlay.style.display = 'none', 1000);
+        }
+
+        function nextNPC() {
+            if (!isWaitingForNext) return;
+            bottomBar.onclick = null;
+            npcPortrait.style.opacity = '0';
+            currentNPC.state = 'leaving';
+            npcNameUI.innerText = "Antrean";
+            dialogTextUI.innerText = "Tamu berikutnya sedang menuju meja Anda...";
+            setTimeout(() => npcPortrait.style.display = 'none', 400);
+        }
+
+        // ========== FUNGSI MODAL BARU ==========
+        function getTitleForDifficulty() {
+            if (difficulty === 'easy') return 'Amil Junior';
+            if (difficulty === 'medium') return 'Amil';
+            return 'Amil Senior';
+        }
+
+        function getModeLabel() {
+            if (difficulty === 'easy') return 'Mudah';
+            if (difficulty === 'medium') return 'Sedang';
+            return 'Sulit';
+        }
+
+        function showWinModal(title) {
+            document.getElementById('win-title-text').innerText = title;
+            document.getElementById('win-score-text').innerHTML =
+                'Skor: <strong>100</strong> | Mode: <span id="win-mode-label">' + getModeLabel() + '</span>';
+            document.getElementById('win-modal-overlay').classList.add('active');
+        }
+
+        function hideWinModal() {
+            document.getElementById('win-modal-overlay').classList.remove('active');
+        }
+
+        function showGameOverModal() {
+            document.getElementById('gameover-modal-overlay').classList.add('active');
+        }
+
+        function hideGameOverModal() {
+            document.getElementById('gameover-modal-overlay').classList.remove('active');
+        }
+
+        function winGame() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            const title = getTitleForDifficulty();
+            playSound('win');
+            // Sembunyikan NPC dan bersihkan UI
+            npcPortrait.style.opacity = '0';
+            npcPortrait.style.display = 'none';
+            seniorPortrait.style.display = 'none';
+            seniorActive = false;
+            optionsContainer.innerHTML = '';
+            bottomBar.onclick = null;
+            isWaitingForNext = true;
+            showWinModal(title);
+        }
+
+        function triggerGameOver() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            seniorPortrait.style.display = 'none';
+            seniorActive = false;
+            playSound('gameover');
+            npcPortrait.style.opacity = '0';
+            npcPortrait.style.display = 'none';
+            optionsContainer.innerHTML = '';
+            bottomBar.onclick = null;
+            isWaitingForNext = true;
+            showGameOverModal();
+        }
+
+        function continuePlaying() {
+            hideWinModal();
+            score = 0;
+            scoreUI.innerText = '0';
+            satisfaction = 100;
+            satBar.style.width = '100%';
+            satBar.style.background = '#10b981';
+            npcPortrait.style.display = 'none';
+            dialogTextUI.innerText = 'Tamu berikutnya sedang menuju meja Anda...';
+            npcNameUI.innerText = 'Antrean';
+            optionsContainer.innerHTML = '';
+            bottomBar.onclick = null;
+            isWaitingForNext = false;
+            gameActive = true;
+            lastNPCType = null;
+            clearInterval(timerInterval);
+            spawnNPC();
+            animate();
+        }
+
+        function backToMainMenuFromWin() {
+            hideWinModal();
+            backToMainMenu();
+        }
+
+        function backToMainMenuFromGameOver() {
+            hideGameOverModal();
+            backToMainMenu();
+        }
+
+        function backToMainMenu() {
+            playSound('click');
+            gameActive = false;
+            clearInterval(timerInterval);
+            score = 0;
+            satisfaction = 100;
+            seniorAvailable = true;
+            seniorActive = false;
+            hideWinModal();
+            hideGameOverModal();
+            document.getElementById('ui-top').style.display = 'none';
+            bottomBar.style.display = 'none';
+            npcPortrait.style.display = 'none';
+            seniorPortrait.style.display = 'none';
+            document.getElementById('menu-overlay').style.display = 'flex';
+            document.getElementById('difficulty-menu').style.display = 'none';
+            document.getElementById('name-menu').style.display = 'none';
+            document.getElementById('name-input-display').innerText = '_';
+            document.getElementById('register-btn').disabled = true;
+            playerName = "";
+            lastNPCType = null;
+            isWaitingForNext = false;
+            bottomBar.onclick = null;
+            optionsContainer.innerHTML = '';
+            if (audioCtx) audioCtx.close().then(() => audioCtx = null);
+        }
+
+        function showTitleInfo() {
+            playSound('click');
+            document.getElementById('title-info-modal').style.display = 'flex';
+        }
+
+        function hideTitleInfo() {
+            playSound('click');
+            document.getElementById('title-info-modal').style.display = 'none';
+        }
+
+        function animate() { if (!gameActive) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height); if (currentNPC) { currentNPC.update();
+                currentNPC.draw(); } requestAnimationFrame(animate); }
+
+        window.addEventListener('keydown', e => {
+            if (document.getElementById('name-menu').style.display === 'flex') {
+                if (e.key === 'Backspace') backspace();
+                else if (e.key.length === 1) typeChar(e.key.toUpperCase());
+            }
+        });
+    </script>
 </body>
 </html>
