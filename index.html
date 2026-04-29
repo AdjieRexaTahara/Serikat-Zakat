@@ -611,7 +611,7 @@
                     <div class="text-[10px] font-bold uppercase text-emerald-400">Amil Aktif</div>
                     <div class="text-lg font-black leading-tight" id="amil-name-display">Menunggu...</div>
                     <div class="mt-2">
-                        <div class="text-[9px] uppercase opacity-70">Kepuasan Publik</div>
+                        <div class="text-[9px] uppercase opacity-70">Kepercayaan Publik</div>
                         <div class="bar-container">
                             <div id="satisfaction-bar"></div>
                         </div>
@@ -764,6 +764,7 @@
             isWaitingForNext = false,
             timerInterval = null;
         let lastNPCType = null;
+        let seniorCooldownInterval = null; // Simpan interval cooldown
 
         const randomNames = ["Bambang", "Suryo", "Fauzan", "Rian", "Adit", "Prasetyo", "Hendra", "Budi", "Zul", "Umar"];
 
@@ -926,6 +927,14 @@
             document.getElementById('amil-name-display').innerText = playerName;
             bottomBar.style.display = 'block';
             gameActive = true;
+            // Pastikan status bantuan senior siap (dari menu utama sudah di-reset)
+            if (!seniorAvailable) {
+                seniorAvailable = true;
+                document.getElementById('senior-status').innerText = "TERSEDIA";
+                document.getElementById('senior-help-btn').disabled = false;
+                document.getElementById('senior-timer').classList.add('hidden');
+                document.getElementById('senior-cooldown-overlay').style.height = "0%";
+            }
             spawnNPC();
             animate();
         }
@@ -958,16 +967,21 @@
                 overlay = document.getElementById('senior-cooldown-overlay');
             status.innerText = "COOLDOWN";
             timer.classList.remove('hidden');
-            const cd = setInterval(() => {
+            // Hentikan interval sebelumnya jika ada
+            if (seniorCooldownInterval) clearInterval(seniorCooldownInterval);
+            seniorCooldownInterval = setInterval(() => {
                 currentCooldown--;
                 timer.innerText = currentCooldown + "s";
                 overlay.style.height = (currentCooldown / seniorCooldownTime * 100) + "%";
-                if (currentCooldown <= 0 || !gameActive) { clearInterval(cd);
+                if (currentCooldown <= 0 || !gameActive) {
+                    clearInterval(seniorCooldownInterval);
+                    seniorCooldownInterval = null;
                     seniorAvailable = true;
                     status.innerText = "TERSEDIA";
                     timer.classList.add('hidden');
                     btn.disabled = false;
-                    overlay.style.height = "0%"; }
+                    overlay.style.height = "0%";
+                }
             }, 1000);
         }
 
@@ -1224,10 +1238,23 @@
             playSound('click');
             gameActive = false;
             clearInterval(timerInterval);
+            // Hentikan cooldown senior jika sedang berjalan
+            if (seniorCooldownInterval) {
+                clearInterval(seniorCooldownInterval);
+                seniorCooldownInterval = null;
+            }
             score = 0;
             satisfaction = 100;
+            scoreUI.innerText = '0';
+            satBar.style.width = '100%';
+            satBar.style.background = '#10b981';
             seniorAvailable = true;
             seniorActive = false;
+            // Reset UI bantuan senior
+            document.getElementById('senior-status').innerText = "TERSEDIA";
+            document.getElementById('senior-help-btn').disabled = false;
+            document.getElementById('senior-timer').classList.add('hidden');
+            document.getElementById('senior-cooldown-overlay').style.height = "0%";
             hideWinModal();
             hideGameOverModal();
             document.getElementById('ui-top').style.display = 'none';
